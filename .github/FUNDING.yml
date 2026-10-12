@@ -1,0 +1,7 @@
+# Puts a "Sponsor" button at the top of the repository and in the sidebar.
+#
+# One destination on purpose: straight to Patreon, not through zylio.net first.
+# The `github:` key stays absent: GitHub Sponsors pays out through Stripe
+# Connect, which does not operate in Pakistan. Patreon pays out via Payoneer.
+
+patreon: zylio

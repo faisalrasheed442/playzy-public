@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playzy — TikTok LIVE gifts into game actions</title>
+  <meta name="description" content="Playzy is a free Windows app that turns TikTok LIVE gifts, likes, follows and chat into actions in GTA V, Minecraft and any PC game, with an overlay for TikTok LIVE Studio and OBS. No event limits, no watermark, no account.">
+  <meta property="og:title" content="Playzy — your viewers play. Free.">
+  <meta property="og:description" content="TikTok LIVE gifts, likes and chat trigger GTA V, Minecraft and any PC game. Free, with no event limits, no watermark and no account.">
+  <meta property="og:image" content="images/playzy-og.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%2316181c'/%3E%3Cg transform='translate(14 14) scale(.5625)'%3E%3Cpath d='M13 51V13H33A14 14 0 0 1 33 41H13' fill='none' stroke='%23f2efe7' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='2' y='40' width='22' height='22' rx='6' fill='%23f2efe7'/%3E%3Crect x='2' y='2' width='22' height='22' rx='6' fill='%23f2efe7'/%3E%3Crect x='36' y='16' width='22' height='22' rx='6' fill='%23a259ff'/%3E%3Cpath d='M43.5 21.5V32.5L53 27Z' fill='%2316181c' stroke='%2316181c' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --paper:#f2efe7; --paper-2:#e9e5da; --ink:#16181c; --ink-2:#4a4d55; --line:#d9d4c7;
+      --signal:#2553f5; --lit:#a259ff; --lit-ink:#6d2fd8; --card:#faf8f3; --on-signal:#ffffff;
+    }
+    @media (prefers-color-scheme:dark){
+      :root{
+        --paper:#16181c; --paper-2:#1f2227; --ink:#f2efe7; --ink-2:#b3b0a8; --line:#2e3239;
+        --signal:#5b7cff; --lit:#a259ff; --lit-ink:#c9a2ff; --card:#1c1f24; --on-signal:#ffffff;
+      }
+      .brand svg{border-radius:8px; box-shadow:0 0 0 1px var(--line)}
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; background:var(--paper); color:var(--ink);
+      font:17px/1.6 "Bricolage Grotesque",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:var(--signal)}
+    .wrap{max-width:1120px; margin:0 auto; padding:0 16px 72px}
+
+    nav{display:flex; align-items:center; justify-content:space-between; padding:20px 0}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.15rem;
+      color:var(--ink); text-decoration:none; letter-spacing:-.01em}
+    .brand svg{width:32px; height:32px}
+    nav .links{display:flex; gap:20px; font-size:.95rem}
+    nav .links a{color:var(--ink-2); text-decoration:none}
+    nav .links a:hover{color:var(--ink)}
+
+    header{padding:56px 0 40px; display:grid; grid-template-columns:.9fr 1.1fr; gap:44px; align-items:center}
+    .eyebrow{display:inline-block; font-size:.8rem; font-weight:600; letter-spacing:.08em;
+      text-transform:uppercase; color:var(--lit-ink); margin-bottom:14px}
+    h1{font-size:clamp(2.4rem,6vw,4.2rem); line-height:1.02; letter-spacing:-.035em;
+      font-weight:800; margin:0 0 20px}
+    h1 em{font-style:normal; box-shadow:inset 0 -.32em 0 var(--lit)}
+    .lede{font-size:1.18rem; color:var(--ink-2); max-width:30em; margin:0 0 30px}
+    .cta{display:flex; flex-wrap:wrap; gap:12px}
+    .btn{display:inline-flex; align-items:center; gap:10px; padding:14px 22px; border-radius:12px;
+      font-weight:600; font-size:1rem; text-decoration:none; border:1.5px solid var(--ink);
+      transition:transform .12s ease, box-shadow .12s ease}
+    .btn.primary{background:var(--signal); border-color:var(--signal); color:var(--on-signal);
+      box-shadow:0 3px 0 var(--ink)}
+    .btn.primary:hover{transform:translateY(-1px); box-shadow:0 4px 0 var(--ink)}
+    .btn.primary:active{transform:translateY(2px); box-shadow:0 1px 0 var(--ink)}
+    .btn.ghost{color:var(--ink); background:transparent}
+    .btn.ghost:hover{background:var(--paper-2)}
+    .btn svg{width:18px; height:18px}
+    .platforms{margin-top:16px; font-size:.9rem; color:var(--ink-2)}
+
+    .shot{display:block; width:100%; height:auto; border:1.5px solid var(--ink); border-radius:14px;
+      box-shadow:8px 8px 0 var(--ink); background:var(--card)}
+
+    .strip{display:flex; flex-wrap:wrap; gap:10px 28px; padding:22px 0; margin:20px 0 8px;
+      border-top:1.5px solid var(--ink); border-bottom:1.5px solid var(--ink); font-weight:600}
+    .strip span::before{content:""; display:inline-block; width:8px; height:8px; border-radius:2px;
+      background:var(--lit); margin-right:10px; vertical-align:middle}
+
+    h2{font-size:clamp(1.6rem,3.4vw,2.2rem); letter-spacing:-.025em; line-height:1.1; margin:64px 0 24px; font-weight:800}
+    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+    .feat{background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:22px}
+    .feat .ic{width:40px; height:40px; border-radius:10px; display:grid; place-items:center;
+      background:var(--paper-2); color:var(--signal); margin-bottom:14px}
+    .feat .ic svg{width:20px; height:20px}
+    .feat h3{margin:0 0 6px; font-size:1.08rem; letter-spacing:-.01em}
+    .feat p{margin:0; color:var(--ink-2); font-size:.95rem}
+    .feat code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.88em}
+
+    .gallery{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+    .gallery figure{margin:0}
+    .gallery img{width:100%; height:auto; border:1.5px solid var(--line); border-radius:12px; display:block}
+    .gallery figcaption{font-size:.9rem; color:var(--ink-2); margin-top:8px}
+
+    table{width:100%; border-collapse:collapse; font-size:.97rem}
+    th,td{text-align:left; padding:13px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+    th{font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-2); font-weight:600}
+    td code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.88em;
+      background:var(--paper-2); padding:2px 7px; border-radius:6px; word-break:break-all}
+    .table-wrap{overflow-x:auto}
+
+    .note{margin-top:20px; padding:16px 18px; border-left:4px solid var(--lit); background:var(--card);
+      border-radius:0 10px 10px 0; color:var(--ink-2); font-size:.95rem}
+    .support{margin-top:64px; padding:32px; border:1.5px solid var(--ink); border-radius:16px;
+      background:var(--card); display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between}
+    .support h2{margin:0 0 6px}
+    .support p{margin:0; color:var(--ink-2); max-width:34em}
+
+    footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--line); color:var(--ink-2);
+      font-size:.9rem; display:flex; flex-wrap:wrap; gap:10px 24px; justify-content:space-between}
+    footer a{color:var(--ink-2)}
+
+    @media (max-width:900px){
+      header{grid-template-columns:1fr; padding-top:32px; gap:36px}
+      .grid{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:560px){
+      .grid, .gallery{grid-template-columns:1fr}
+      nav .links a.hide-sm{display:none}
+      .shot{box-shadow:5px 5px 0 var(--ink)}
+      .support{padding:22px}
+      th:nth-child(3),td:nth-child(3){display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#top" aria-label="Playzy">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#16181c"/><g transform="translate(14 14) scale(.5625)"><path d="M13 51V13H33A14 14 0 0 1 33 41H13" fill="none" stroke="#f2efe7" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="40" width="22" height="22" rx="6" fill="#f2efe7"/><rect x="2" y="2" width="22" height="22" rx="6" fill="#f2efe7"/><rect x="36" y="16" width="22" height="22" rx="6" fill="#a259ff"/><path d="M43.5 21.5V32.5L53 27Z" fill="#16181c" stroke="#16181c" stroke-width="1.5" stroke-linejoin="round"/></g></svg>
+        Playzy
+      </a>
+      <div class="links">
+        <a href="#features" class="hide-sm">Features</a>
+        <a href="#screens" class="hide-sm">Screens</a>
+        <a href="#download">Download</a>
+        <a href="https://github.com/faisalrasheed442/playzy-public/blob/HEAD/guide/playzy-guide.md" class="hide-sm">Guide</a>
+        <a href="privacy-policy.html">Privacy</a>
+      </div>
+    </nav>
+
+    <header id="top">
+      <div>
+        <span class="eyebrow">Free TikTok LIVE app by zylio</span>
+        <h1>Your viewers play.<br><em>Free.</em></h1>
+        <p class="lede">A Rose gives you a speed boost in GTA V. A Doughnut drops a creeper next to you in Minecraft.
+          300 likes and you jump, in any PC game. Playzy reads your TikTok LIVE and runs it in your game,
+          with an overlay that shows viewers what each gift does.</p>
+        <div class="cta">
+          <a class="btn primary" href="https://github.com/faisalrasheed442/playzy-public/releases/latest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download Playzy
+          </a>
+          <a class="btn ghost" href="#features">See what it does</a>
+        </div>
+        <p class="platforms">Windows 10/11 · 64-bit · one installer</p>
+      </div>
+      <img class="shot" src="images/app-live.png" width="1440" height="900"
+           alt="The Playzy Live page during a TikTok LIVE: viewers, coins and likes, a Chiliad Race running in GTA V with the score, and gifts on the left turning into actions on the right">
+    </header>
+
+    <div class="strip">
+      <span>Free forever</span><span>No event limits</span><span>No watermark</span><span>No account</span><span>Gifts never thrown away</span>
+    </div>
+
+    <h2 id="features">Gifts in, game actions out</h2>
+    <section class="grid">
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14l-1.5-6.5A2 2 0 0 0 15.6 9H8.4a2 2 0 0 0-1.9 1.5z"/><circle cx="7.5" cy="17.5" r="2"/><circle cx="16.5" cy="17.5" r="2"/></svg></div>
+        <h3>GTA V Story Mode</h3>
+        <p>53 effects, from tanks and jets to chimps, meteors and a black hole, and 16 challenges with a win/loss score, from the Chiliad Race to Zombie Apocalypse and a Boss Fight. Playzy installs its script with one button.</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="m3 7 9 5 9-5M12 12v10"/></svg></div>
+        <h3>Minecraft Java</h3>
+        <p>Mobs, TNT, lightning, potion effects, items, weather or any server command, over RCON, on your own server or a rented one.</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg></div>
+        <h3>Any PC game</h3>
+        <p>Gifts press keys, hold them, type, click and turn the camera. Keys only go to your game's window, never to your browser.</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M10 6h4M10 10h4"/></svg></div>
+        <h3>An overlay for LIVE Studio</h3>
+        <p>One link, portrait or landscape: the gift menu, alerts with combos, a like goal, top gifters and the game HUD. OBS works too.</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 6.4M12 12 5.6 18.4M12 12H3"/></svg></div>
+        <h3>Gift spinner and voice</h3>
+        <p>A wheel that picks a random action for a gift or <code>!spin</code>, and lines spoken with the voices Windows already has.</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7.5 15h9"/></svg></div>
+        <h3>Test it before you go live</h3>
+        <p>Fake viewers send gifts, likes and chat through your preset, exactly like real ones, so you know it works first.</p>
+      </div>
+    </section>
+    <p class="note">Also in the box: 12 gift actions made for the GTA V challenges (a zombie horde, healing the boss,
+      adding or stealing time), viewers' names over the enemies they send, coin tiers for gifts without a rule, combos
+      counted once or per gift with a limit, cooldowns per rule and per viewer, chat commands, presets you can export
+      and share, a webhook for any URL, and a WebSocket SDK for mods of other games. A gift that arrives during a
+      cooldown waits its turn; free likes and chat are skipped instead.</p>
+
+    <h2 id="screens">See it</h2>
+    <section class="gallery">
+      <figure><img src="images/app-stream-roulette.png" width="1440" height="810" loading="lazy" alt="Chaos Roulette on the overlay: the game spins the wheel and lands on Ice roads, and the HUD lists the rules running"><figcaption>Chaos Roulette: the game spins the wheel on your overlay, and the rule it lands on starts in GTA V.</figcaption></figure>
+      <figure><img src="images/app-presets.png" width="1440" height="900" loading="lazy" alt="Presets: the GTA V Chaos rules, each gift with its effect and cooldown"><figcaption>A preset is your list of rules: this gift, that effect, with a cooldown if you want one.</figcaption></figure>
+      <figure><img src="images/app-games.png" width="1440" height="900" loading="lazy" alt="Games: the GTA V card with the Playzy script installed and the game connected"><figcaption>Playzy finds GTA V, checks ScriptHookV and installs its script.</figcaption></figure>
+      <figure><img src="images/app-overlay.png" width="1440" height="900" loading="lazy" alt="Overlay: the canvas, the full overlay link and one link per widget"><figcaption>One link for TikTok LIVE Studio or OBS, or one per widget.</figcaption></figure>
+    </section>
+
+    <h2 id="download">Download</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Platform</th><th>File</th><th>How</th></tr></thead>
+        <tbody>
+          <tr><td><b>Windows 10/11</b> (64-bit)</td><td><code>PlayzySetup.exe</code></td><td>Run the installer. Playzy updates itself after that, and asks first.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">For GTA V you also need <a href="http://www.dev-c.com/gtav/scripthookv/">ScriptHookV</a> and
+      <a href="https://github.com/scripthookvdotnet/scripthookvdotnet/releases">ScriptHookVDotNet 3</a>, and Playzy is for
+      Story Mode only. For Minecraft, a Java server with RCON on. Windows may say “Windows protected your PC” because
+      Playzy is not code-signed yet: choose <b>More info</b>, then <b>Run anyway</b>. The
+      <a href="https://github.com/faisalrasheed442/playzy-public/blob/HEAD/guide/playzy-guide.md">user guide</a> has every step.</p>
+
+    <section class="support">
+      <div>
+        <h2>Built by one person</h2>
+        <p>Playzy is made by Faisal Malik at zylio. If it made your LIVE more fun, you can chip in.
+          Nothing is locked behind it, ever.</p>
+      </div>
+      <a class="btn ghost" href="https://www.patreon.com/zylio">Support on Patreon</a>
+    </section>
+
+    <footer>
+      <span>© 2026 zylio · Faisal Malik · MIT</span>
+      <span>
+        <a href="https://zylio.net/software/playzy">zylio.net</a> ·
+        <a href="https://github.com/faisalrasheed442/playzy-public/releases">Releases</a> ·
+        <a href="privacy-policy.html">Privacy</a>
+      </span>
+    </footer>
+  </div>
+</body>
+</html>
