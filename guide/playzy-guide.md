@@ -195,10 +195,20 @@ If you already have a `PlayzyGTA.ini`, Playzy asks whether to **Keep my settings
 ![The GTA V card with everything installed and the game running](images/games-gta-ready.png)
 
 1. The status says **Connected** and **In game**.
-2. **Playzy script** says which version is installed, and whether it is up to date. After a Playzy update, this button says **Update the Playzy script** when there is a newer one.
+2. **Playzy script** says which version is installed, and whether it is up to date.
 3. After installing, Playzy reminds you: start GTA V, or press **Insert** in the game to reload scripts.
 4. **Script port:** 8766. It must match `Port=` in `PlayzyGTA.ini`. Leave both alone. If another mod already uses 8766, the script moves to 8767, 8768, 8769 or 8770, or as a last resort to any free port, which it writes into `scripts\PlayzyGTA.port`. Playzy finds it there by itself.
-5. **Test connection** checks that Playzy can reach the script right now. It says **PlayzyGTA 1.1.1 is running** when it works, and which port it found it on if that isn't 8766.
+5. **Test connection** checks that Playzy can reach the script right now. It says **PlayzyGTA** and the script's version, then **is running**, when it works. It also says which port it found the script on, if that isn't 8766.
+
+The pictures were made with an earlier Playzy, so the version numbers and the counts in them (16 challenges, 53 effects) are older than this guide.
+
+### Playzy keeps the script up to date
+
+When Playzy starts, it checks the script in your GTA V folder. If that script is older than the one inside Playzy (after a Playzy update, for example), Playzy replaces it by itself. Your `PlayzyGTA.ini` and its settings stay as they are.
+
+If GTA V is already running at that moment, the game still runs the old script. The game and the Games page both tell you, for example *old script 1.1.0 running: press Insert in GTA V to load the new one*. Press **Insert** in the game once.
+
+You can still update by hand: on the Games page the button then says **Update the Playzy script**.
 
 ### Story Mode only
 
@@ -227,7 +237,7 @@ You can fire effects yourself from the keyboard, without a numpad. **Hold Ctrl+S
 
 The numbers are the ones above the letters. To change a key, open `PlayzyGTA.ini` in the `scripts` folder, edit the `[Hotkeys]` part, save, and press **Insert** in the game. A key can run an effect name (like `tank`) or a command: `!restart`, `!stop`, `!cleanup`, `!win`, `!loss`, or `!mode:taxi` to switch challenge. **Insert** and **F4** can't be used, because ScriptHookVDotNet already uses them.
 
-### The 53 effects
+### The 56 effects
 
 | Group | Effects |
 |---|---|
@@ -238,9 +248,11 @@ The numbers are the ones above the letters. To change a key, open `PlayzyGTA.ini
 | Explosions | Rocket, Airstrike, Meteor shower, Black hole |
 | Enemies | Angry chimps, Ballas gang, Killer clowns, Aliens, Zombies, SWAT team, Juggernaut |
 | World | Thunderstorm, Night, Day |
-| Challenges | Zombie horde, Supply drop, Rammer car, Spin the roulette, Heal the boss, Boss rage, Reveal the target, Armour the target, Weapon up, Weapon down, Add time, Steal time |
+| Challenges | Zombie horde, Supply drop, Rammer car, Spin the roulette, Heal the boss, Boss rage, Reveal the target, Armour the target, Weapon up, Weapon down, Add time, Steal time, Join the challenge, Join the red team, Join the blue team |
 
-The 12 in **Challenges** are made for one challenge each, and do something else outside it ([section 18](#gift-actions-made-for-the-challenges)).
+The 15 in **Challenges** are made for certain challenges ([section 18](#gift-actions-made-for-the-challenges)). The three **Join** actions let a viewer join Battle Royale, Viewer Racers or Team War; viewers can also do that by typing in chat, with no rule ([section 18](#viewers-join-from-the-chat)).
+
+In a challenge, a gift only runs if it fits that challenge. If it doesn't, the challenge runs its stand-in instead ([section 18](#which-gifts-work-in-each-challenge)). In free play every effect runs.
 
 An effect sent while you are dead or the game is loading waits (up to 60 seconds) instead of being thrown away. When a viewer sends enemies, their name floats over those enemies' heads in the game, like **tom_plays's Zombie**, and the map marker says who sent them too.
 
@@ -638,7 +650,9 @@ The numbers across the middle are **Viewers**, **Coins**, **Gifts**, **Likes**, 
 
 ## 18. GTA V challenges
 
-Besides free play, the Playzy script has 16 challenges. Viewers help or hurt you while you try to win, and the overlay keeps the score: **W** for wins, **L** for losses. The **GTA V challenge** card on the Live page is there when the preset in use is a GTA V preset.
+Besides free play, the Playzy script has 20 challenges. Viewers help or hurt you while you try to win, and the overlay keeps the score: **W** for wins, **L** for losses. In three of them, viewers can even join the game from the chat. The **GTA V challenge** card on the Live page is there when the preset in use is a GTA V preset.
+
+The pictures in this section were made with Playzy 1.1, so the list in them shows 16 challenges, and the card has no **Free play** button yet.
 
 ### Step 1: Pick a challenge
 
@@ -659,6 +673,12 @@ Besides free play, the Playzy script has 16 challenges. Viewers help or hurt you
 6. **Clean up** removes everything viewers spawned.
 7. The line under the buttons: the challenge, the round's state, the score (wins out of the goal of 20), and your health.
 
+Next to **Start challenge** there is also a **Free play** button. It stops the challenge and takes you back to free play.
+
+**Start challenge**, **Free play**, **Restart round** and **Clean up** happen right away. They don't wait behind the gifts in the queue, and they work even when **Pause actions** is on.
+
+While a challenge sets up and counts down, you are frozen in place. Gifts that arrive then wait, and run as soon as the round starts.
+
 You can also start one with the hotkeys: in `PlayzyGTA.ini`, a key set to `!mode:zombies` (or any other name from the list in [the settings](#change-the-challenges-in-playzygtaini)) switches to it.
 
 ### Or let a gift start one
@@ -668,7 +688,7 @@ Viewers can pick the challenge too. Make a rule for a gift (or a chat command) w
 ![A rule that starts Zombie Apocalypse](images/rule-start-challenge.png)
 
 1. The action: **Start a challenge** (game **GTA V**).
-2. **Challenge:** which one. The list uses the short names: `chiliad`, `hiking`, `killme`, `laststand`, `taxi`, `megaramp`, `speedbomb`, `zombies`, `roulette`, `koth`, `boss`, `gungame`, `mostwanted`, `derby`, `rush`, `bounty`, or `free` for free play.
+2. **Challenge:** which one. The list uses the short names: `chiliad`, `hiking`, `killme`, `laststand`, `taxi`, `megaramp`, `speedbomb`, `zombies`, `roulette`, `koth`, `boss`, `gungame`, `mostwanted`, `derby`, `rush`, `bounty`, `royale`, `spleef`, `racers`, `teamwar`, or `free` for free play.
 
 ### How winning and losing works
 
@@ -677,8 +697,11 @@ Viewers can pick the challenge too. Make a rule for a gift (or a chat command) w
 - The score is saved in the game's `scripts` folder, so it is still there after a restart.
 - Switching to another challenge resets W and L to zero.
 - During a challenge the police stay away (except in **Most Wanted**), but a viewer's **5 stars** gift still brings them.
+- An enemy you knock down counts as killed and stays down.
+- In the fighting challenges (Can You Kill Me?, Last Standing, Zombie Apocalypse, King of the Hill, Boss Fight, Gun Game, Battle Royale, Team War), an enemy that gets stuck or wanders off is brought back near you.
+- Each challenge only takes the gifts that fit it ([below](#which-gifts-work-in-each-challenge)).
 
-### The 16 challenges
+### The 20 challenges
 
 **Chiliad Race.** Start at the airport and get to the top of Mount Chiliad. On foot unless you set a `StartVehicle`.
 - Win: you reach the summit.
@@ -689,7 +712,7 @@ Viewers can pick the challenge too. Make a rule for a gift (or a chat command) w
 **Can You Kill Me?** Survive while viewers send enemies.
 - Win: you are still alive after 5 minutes.
 
-**Last Standing.** Waves of enemies that get harder: Ballas, then killer clowns, then SWAT, with zombies and juggernauts on some waves. You get some health and armour back between waves.
+**Last Standing.** Waves of enemies that get harder: Ballas, then killer clowns, then SWAT, with zombies and juggernauts on some waves. You get some health and armour back between waves. Only the wave's own enemies count: when they are all down, the next wave comes. Enemies that viewers send still fight you, but the HUD counts them apart (*from viewers*), and they don't hold the next wave back. An enemy stuck on a roof or too far away is brought back near you.
 - Win: you clear all 10 waves.
 
 **Taxi Driver.** Pick up passengers and drive them to their stop. Each fare has a time limit; if you are too slow, the passenger walks off and you get no fare.
@@ -742,15 +765,52 @@ Viewers can pick the challenge too. Make a rule for a gift (or a chat command) w
 - Lose: the 5 minutes run out.
 - Viewers: **Reveal the target** shows exactly where it is for 15 seconds. **Armour the target** gives it armour and more health.
 
+**Battle Royale.** You start in the middle of a circle (the zone) with weapons, and 12 AI fighters hunt you. Over 5 minutes the zone gets smaller in 5 steps: at first its edge is 220 m from the centre, at the end 15 m. Each step it holds for a while, then closes. Outside the zone you lose health every second, a little more at each step, and *GET IN THE ZONE* flashes on the screen. Fighters who end up outside are brought back in, so the end is always a fight inside the circle.
+- Win: every fighter in the round is down: the 12 AI fighters and every viewer who joined.
+- Lose: the zone takes your last health.
+- Viewers: type **!join** in the chat to drop in as a fighter, with their name over their head (up to 8 viewers a round). Gifts made for a fight work as usual. **Ballas gang** sends 3 more fighters near you, with the viewer's name; those 3 fight, but you don't need to take them down to win. Other help gifts become a **Supply drop**, other chaos gifts become **Ballas gang**.
+
+**Sky Spleef.** You stand on a floor of tiles 250 m above the sea, with no parachute. A tile that is about to fall flashes red, then drops 1.5 seconds later. One tile also falls by itself every 15 seconds.
+- Win: you are still up there after 3 minutes.
+- Lose: you fall through.
+- Viewers: chaos gifts make tiles near you fall: **Steal time** drops 4, **Rocket** 3, and **Ragdoll**, **Drunk** and **Low gravity** 2 each (with their normal effect too). Help gifts put tiles back: **Add time** brings back 4, and **Heal** and **Invincible 15 s** bring back 2 (and heal you or make you invincible). Enemies and vehicles don't fit up there; they become **Add time** or **Steal time**.
+- When the round is lost, or you leave the challenge while up there, you get a parachute for the way down.
+
+**Viewer Racers.** A race from the airport to the Vinewood sign against AI cars. Before the start, the cars wait on the grid for 15 seconds while viewers join. If fewer than 4 cars are on the grid, crowd racers fill it, so the race always works. Up to 8 cars race with you. Each car shows its racer's name over it, on the map and on the number plate. A car that gets stuck is put back on the road after 8 seconds.
+- Win: you reach the finish first.
+- Lose: another car reaches the finish first.
+- Viewers: type **!join** to get a car. After the start, a viewer who joins takes over a crowd car. A gift from a viewer who has a car boosts their own car (on the grid, the boost waits for the start). Other drive gifts work as usual, and the rest become **Speed boost** (help) or **Rammer car** (chaos).
+
+**Team War.** Two sides. Blue fights with you, red fights against you. The round starts with bots on both sides, 3 blue and 6 red, so it works without anyone in the chat. Red comes from its own side of the arena.
+- Win: all of red is down.
+- Viewers: type **!red** or **!blue** to join that side, or **!join** for the smaller team (up to 12 viewers a round). Each viewer's fighter carries their name. After that, a gift from a viewer on a side sends that side 2 more fighters. A gift from someone who didn't pick a side works as usual; help gifts that don't fit become **Bodyguards** (2 blue fighters), chaos gifts become **Ballas gang** (2 red fighters).
+
 > The Mega Ramp is built from GTA's stunt-race props. If your game doesn't load them in Story Mode, the challenge says so and goes back to free play. If any challenge can't start, the game says why and goes back to free play.
+
+### Viewers join from the chat
+
+In **Battle Royale**, **Viewer Racers** and **Team War**, viewers join the game by typing in the chat:
+
+| Viewer types | Battle Royale | Viewer Racers | Team War |
+|---|---|---|---|
+| **!join** | drops in as a fighter | gets a car | joins the smaller team |
+| **!red** | same as !join | same as !join | joins red, against you |
+| **!blue** | same as !join | same as !join | joins blue, with you |
+
+- The message must be only that word. The **!** is optional: **join**, **red** and **blue** work too.
+- You don't need a rule for this. It works with every preset, as long as the GTA V script is connected and one of these three challenges is running.
+- Each viewer can join once per round. The game shows the viewer's name over their fighter or their car.
+- The game reminds everyone watching: from time to time it shows *type !join* (or *!red or !blue*) on the screen and in its status line at the top.
+
+There are also three actions for rules: **Join the challenge**, **Join the red team** and **Join the blue team**. They do the same for the viewer who sent the gift. In the other challenges and in free play they do nothing.
 
 ### Gift actions made for the challenges
 
-Twelve GTA V actions are made for one challenge each. In the rule editor they are in the **Challenges** group:
+Fifteen GTA V actions are made for the challenges. In the rule editor they are in the **Challenges** group:
 
 ![The rule editor's action list, open at the Challenges group](images/rule-challenge-actions.png)
 
-1. The **Challenges** group: the 12 challenge actions, then **Start a challenge**, **Restart round** and **Clean up spawns**.
+1. The **Challenges** group: the challenge actions, then **Start a challenge**, **Restart round** and **Clean up spawns**. (This picture is from Playzy 1.1. Since 1.2 the three **Join** actions are in the group too.)
 
 Pick one and the editor says what it does in its challenge, and what it does anywhere else:
 
@@ -759,9 +819,9 @@ Pick one and the editor says what it does in its challenge, and what it does any
 1. The action, here **Zombie horde**.
 2. What it does: in Zombie Apocalypse, 8 runners. Elsewhere, 8 zombies.
 
-A challenge action never does nothing. Outside its own challenge it does something else instead:
+A challenge action is not wasted outside its own challenge. In free play, and in the challenges where it fits, it does something else instead. In a challenge where it doesn't fit, that challenge's stand-in runs ([next section](#which-gifts-work-in-each-challenge)).
 
-| Action | In its challenge | Anywhere else |
+| Action | In its challenge | In free play |
 |---|---|---|
 | **Zombie horde** | Zombie Apocalypse: 8 fast runners | 8 zombies |
 | **Supply drop** | Zombie Apocalypse: weapons, and 40% off the infection | Weapons and a heal |
@@ -773,12 +833,78 @@ A challenge action never does nothing. Outside its own challenge it does somethi
 | **Armour the target** | Bounty Hunt: the target gets armour and health | 2 SWAT |
 | **Weapon up** | Gun Game: one weapon up | Weapons and armour |
 | **Weapon down** | Gun Game: one weapon down | You lose your guns, except a pistol |
-| **Add time** | Checkpoint Rush: 15 more seconds | Repairs your car |
-| **Steal time** | Checkpoint Rush: 10 seconds fewer | Ragdoll |
+| **Add time** | Checkpoint Rush: 15 more seconds. Sky Spleef: 4 tiles come back | Repairs your car |
+| **Steal time** | Checkpoint Rush: 10 seconds fewer. Sky Spleef: 4 tiles near you fall | Ragdoll |
+| **Join the challenge** | Battle Royale: drops in as a fighter. Viewer Racers: a car. Team War: the smaller team | Nothing |
+| **Join the red team** | Team War: joins red. Battle Royale, Viewer Racers: same as Join | Nothing |
+| **Join the blue team** | Team War: joins blue. Battle Royale, Viewer Racers: same as Join | Nothing |
 
-Some ordinary effects change in a challenge too: **Heal** cures the infection in Zombie Apocalypse, **Weapons** moves you up in Gun Game, and **Clear wanted** and **5 stars** work as described in Most Wanted.
+Some ordinary effects change in a challenge too: **Heal** cures the infection in Zombie Apocalypse, **Weapons** moves you up in Gun Game, **Clear wanted** and **5 stars** work as described in Most Wanted, and in Sky Spleef several effects also make tiles fall or come back.
 
 The default **GTA V Chaos** preset doesn't use the challenge actions yet. Add rules for the ones you want.
+
+### Which gifts work in each challenge
+
+Each challenge only takes the gifts that fit it. In Last Standing, a gift can send enemies or help you, but it never launches you, sends you skydiving or teleports you away. In the Chiliad Race, no jet or helicopter skips the climb.
+
+A gift that doesn't fit is not lost. The challenge runs its **stand-in** instead: a help stand-in for a gift that helps you, a chaos stand-in for every other gift. The Actions list on the Live page then adds *(instead of …)* with the short name of the gift's own effect, like *(instead of tank)*. In free play every gift runs as it is.
+
+These count as **help** gifts: Tank, Supercar, Monster truck, Fighter jet, Attack heli, Speed boost, Repair, Heal, Invincible 15 s, Weapons, Bodyguards, Clear wanted, Supply drop, Reveal the target, Weapon up, Add time. Every other effect counts as **chaos**.
+
+Many challenges share one of these sets:
+
+- **Fight set** (on foot, against enemies): Heal, Invincible 15 s, Weapons, Bodyguards, Supply drop, Weapon up, One-hit KO, Ragdoll, Drunk, Low gravity, Rocket, Airstrike, Meteor shower, Thunderstorm, Night, Day, Angry chimps, Ballas gang, Killer clowns, Aliens, Zombies, SWAT team, Juggernaut, Zombie horde.
+- **Drive set** (at the wheel): Speed boost, Repair, Heal, Invincible 15 s, Pop tyres, Rammer car, Rocket, Airstrike, Drunk, Low gravity, Thunderstorm, Night, Day.
+- **Vehicles**: Tank, Supercar, Monster truck, BMX bike, Clown van, Fighter jet, Attack heli. Where the table says *as roadblocks*, these don't give you a vehicle: they land on the road in your way.
+
+| Challenge | Gifts that fit | Help stand-in | Chaos stand-in |
+|---|---|---|---|
+| Free play | every effect | | |
+| Chiliad Race | Drive set, Tank, Supercar, Monster truck, BMX bike, Clown van | Speed boost | Rammer car |
+| Chiliad Hike | Heal, Invincible 15 s, Weapons, Bodyguards, Speed boost, Ragdoll, Drunk, Low gravity, Rocket, Airstrike, Thunderstorm, Night, Day, Angry chimps, Ballas gang, Killer clowns, Zombies; Vehicles as roadblocks | Heal | Angry chimps |
+| Can You Kill Me? | Fight set, Rammer car | Supply drop | Killer clowns |
+| Last Standing | Fight set | Supply drop | Ballas gang |
+| Taxi Driver | Drive set; Vehicles as roadblocks | Repair | Rammer car |
+| Mega Ramp | Speed boost, Repair, Heal, Low gravity, Drunk, Rocket, Pop tyres, Thunderstorm, Night, Day | Speed boost | Drunk |
+| Speed Bomb | Drive set; Vehicles as roadblocks | Repair | Rammer car |
+| Zombie Apocalypse | Heal, Supply drop, Invincible 15 s, Weapons, Bodyguards, Weapon up, One-hit KO, Ragdoll, Drunk, Rocket, Zombies, Zombie horde | Supply drop | Zombies |
+| Chaos Roulette | Drive set, Spin the roulette; Vehicles as roadblocks | Speed boost | Spin the roulette |
+| King of the Hill | Fight set | Supply drop | Ballas gang |
+| Boss Fight | Fight set, Heal the boss, Boss rage | Supply drop | Boss rage |
+| Gun Game | Heal, Invincible 15 s, Weapons, Weapon up, Weapon down, One-hit KO, Ragdoll, Drunk, Low gravity, Thunderstorm, Night, Day, Angry chimps, Ballas gang, Killer clowns, Aliens, Zombies, SWAT team | Weapon up | Weapon down |
+| Most Wanted | Drive set, 5 stars, Clear wanted, Weapons, Bodyguards, SWAT team; Vehicles as roadblocks | Clear wanted | 5 stars |
+| Demolition Derby | Drive set; Vehicles as roadblocks | Repair | Rammer car |
+| Checkpoint Rush | Drive set, Add time, Steal time; Vehicles as roadblocks | Add time | Steal time |
+| Bounty Hunt | Drive set, Tank, Supercar, Monster truck, Weapons, Bodyguards, Reveal the target, Armour the target, SWAT team, Ballas gang | Reveal the target | Armour the target |
+| Battle Royale | Fight set | Supply drop | Ballas gang |
+| Sky Spleef | Heal, Invincible 15 s, Drunk, Low gravity, Ragdoll, Thunderstorm, Night, Day, Rocket, Add time, Steal time | Add time | Steal time |
+| Viewer Racers | Drive set | Speed boost | Rammer car |
+| Team War | Fight set | Bodyguards | Ballas gang |
+
+The three **Join** actions are never swapped. In Battle Royale, Viewer Racers and Team War they join the viewer, everywhere else they do nothing.
+
+**Change the lists yourself** in the `[ChallengeEffects]` section of `PlayzyGTA.ini`. Add a line with the challenge's short name and the effects it should take, or `all` for every effect. For example:
+
+```
+[ChallengeEffects]
+laststand=heal,shield,weapons,ballas,swat,juggernaut,airstrike
+killme=all
+```
+
+Use the effects' short names. They are in the same order as in [the effects table](#the-56-effects):
+
+| Group | Short names |
+|---|---|
+| Vehicles | `tank`, `supercar`, `monster`, `jet`, `heli`, `bmx`, `clownvan` |
+| Driving | `boost`, `repair`, `removecar`, `poptires`, `flip`, `launch` |
+| Player | `heal`, `shield`, `weapons`, `bodyguard`, `clearwanted`, `onehitko`, `ragdoll`, `drunk`, `lowgravity`, `wanted` |
+| Teleport | `skydive`, `airport`, `jail`, `randomtp` |
+| Explosions | `rocket`, `airstrike`, `meteor`, `blackhole` |
+| Enemies | `chimp`, `ballas`, `clown`, `alien`, `zombie`, `swat`, `juggernaut` |
+| World | `storm`, `night`, `day` |
+| Challenges | `horde`, `supplydrop`, `rammer`, `roulette`, `bossheal`, `bossrage`, `reveal`, `escort`, `upgrade`, `downgrade`, `addtime`, `stealtime`, `join`, `joinred`, `joinblue` |
+
+A name the script doesn't know is skipped and noted in `PlayzyGTA.log`. Save the file and press **Insert** in the game.
 
 ### The overlay during a challenge
 
@@ -833,8 +959,14 @@ These pictures come from the app with a stand-in game, not from a real round.
 | `[Derby]` | `Rammers` (6, from 2 to 12), `Vehicle` (dukes2) |
 | `[Rush]` | `Checkpoints` (8), `StartSeconds` (60), `BonusSeconds` (20), `Vehicle` (sultan) |
 | `[Bounty]` | `Seconds` (300), `Vehicle` (sultan, your car) |
+| `[Royale]` | `StartRadius` (220 m), `EndRadius` (15 m), `Stages` (5), `Seconds` (300), `Fighters` (12), `MaxJoins` (8), `DamagePerSecond` (6) |
+| `[Spleef]` | `Z` (250: the floor's height), `Seconds` (180), `Tiles` (7 along one side), `CrumbleSeconds` (15, 0 = never), `Prop` (empty: built-in) |
+| `[Racers]` | `StartX/Y/Z`, `TargetX/Y/Z`, `TargetRadius` (30), `StartName`, `TargetName`, `Vehicle` (elegy2), `RacerCars` (elegy2, carbonizzare, feltzer2, jester, massacro), `GridSeconds` (15), `MinRacers` (4), `RacerSpeed` (40), `DrivingStyle` (786468) |
+| `[TeamWar]` | `RedBots` (6), `BlueBots` (3), `MaxBlue` (8), `MaxJoins` (12) |
 
-> **Updating from Playzy 1.0?** Your old `PlayzyGTA.ini` keeps working; the new challenges use their built-in settings. To get the new sections, click **Update the Playzy script** on the Games page and choose **Use the defaults**. That resets the whole file, so write down anything you changed first.
+`[ChallengeEffects]` decides which gifts each challenge takes ([above](#which-gifts-work-in-each-challenge)).
+
+> **Updating from an older Playzy?** Playzy updates the script by itself, but it keeps your old `PlayzyGTA.ini`. That file keeps working; the new challenges use their built-in settings. To get the new sections, click **Update the Playzy script** on the Games page and choose **Use the defaults**. That resets the whole file, so write down anything you changed first.
 
 When the game isn't running, the line under the challenge buttons says so:
 
@@ -862,7 +994,10 @@ When the game isn't running, the line under the challenge buttons says so:
 | **"This LIVE is age-restricted"** | TikTok doesn't share events from age-restricted LIVEs, so Playzy can't read them. |
 | **"Connection problem: …"** | A network problem, or TikTok changed something. Playzy keeps trying. If it keeps happening after a TikTok change, the TikTokLive library may need an update, and so will Playzy. |
 | **A gift does nothing** | Check the gift name in the rule. It has to match the name TikTok uses in your region. After your first connection, the rule editor suggests the right names. Check the rule is ticked **On**, and that its preset is the one in use. |
-| **Gifts arrive late** | The rule has a cooldown, so gifts wait their turn. Look at **Actions** on the Live page, and lower the cooldown if you like. |
+| **Gifts arrive late** | The rule has a cooldown, so gifts wait their turn. Look at **Actions** on the Live page, and lower the cooldown if you like. During a GTA V challenge's setup and countdown, gifts also wait until the round starts. |
+| **A GTA V gift does something else** | The challenge that is running doesn't take that gift, so it runs the challenge's stand-in. The Actions list says *(instead of …)*. See [which gifts work in each challenge](#which-gifts-work-in-each-challenge). |
+| **!join does nothing** | It only works in Battle Royale, Viewer Racers and Team War, with the GTA V script connected. The chat message must be only **!join** (or **!red**, **!blue**). Each viewer can join once per round, and a round can be full (8 fighters in Battle Royale, 8 cars in Viewer Racers, 12 viewers in Team War). |
+| **A new challenge says it isn't in the script** | The game still runs an older script. Press **Insert** in GTA V, or click **Update the Playzy script** on the Games page. |
 
 ### GTA V: "Game not connected"
 
@@ -870,7 +1005,7 @@ Go through this list in order:
 
 1. **Story Mode is loaded.** Not the main menu, not GTA Online.
 2. **The Games page shows three green dots** for ScriptHookV, the ASI loader and ScriptHookVDotNet. If one is red, install it ([section 5](#5-gta-v)).
-3. **The Playzy script is installed and up to date.** The Games page says *Version 1.1.1 is installed. It's up to date.* The files are `PlayzyGTA.3.cs` and `PlayzyGTA.ini` in `GTA V\scripts`. If the button says **Update the Playzy script**, click it.
+3. **The Playzy script is installed and up to date.** The Games page says *Version … is installed. It's up to date.* The files are `PlayzyGTA.3.cs` and `PlayzyGTA.ini` in `GTA V\scripts`. Playzy updates an older script by itself when it starts. If the game was already running then, the status says *old script … running: press Insert in GTA V to load the new one*: press **Insert** in the game. If the button says **Update the Playzy script**, click it.
 4. **No old gift script in the way.** If the Games page names a script that also uses port 8766 (like `GiftEffects.cs`), click **Install and fix** ([section 5](#step-3-let-playzy-install-its-script)).
 5. **"Playzy is ready" appears in the game.** If it doesn't, press **Insert** to reload scripts. Then open **`ScriptHookVDotNet.log`** in your GTA V folder, and **`PlayzyGTA.log`** in `GTA V\scripts`. They say what went wrong.
 6. **GTA V just updated?** After a game update, ScriptHookV usually stops working until its author releases a new version. Check its page.
@@ -921,7 +1056,7 @@ When you ask for help, send `playzy.log`. It has no passwords in it: Playzy neve
 ## 20. Updating and uninstalling
 
 - **Updating:** a few seconds after Playzy starts, it checks whether a new version is out. If there is one, a window shows what's new. Click **Download & install**. Windows asks for permission once, Playzy closes, installs the update and opens again. **Later** skips it for now. You can also click **Check for updates** in Settings.
-- **After an update**, look at the GTA V card on the Games page. If the script has a new version, the button says **Update the Playzy script**. Click it, then press Insert in the game.
+- **After an update**, Playzy puts its newer GTA V script into your GTA V folder by itself the next time it starts, and keeps your `PlayzyGTA.ini`. If GTA V was already running, press **Insert** in the game once to load it.
 - **Uninstalling:** use Windows **Settings > Apps > Playzy > Uninstall**. Your settings, presets and logs are kept, in case you come back. Delete `%LOCALAPPDATA%\Playzy` yourself if you want them gone. The GTA V script stays in `GTA V\scripts` until you delete `PlayzyGTA.3.cs` and `PlayzyGTA.ini`.
 
 ![The About box](images/about.png)
@@ -988,6 +1123,7 @@ Yes. **Export…** on the Presets page saves it as a `.json` file. Your friend c
 | **Overlay** | The graphics on top of your stream: gift menu, alerts, the wheel, the HUD. |
 | **HUD** | The game box on the overlay: challenge, health, wins and losses. |
 | **Challenge** | A GTA V game mode with a goal, like Zombie Apocalypse. You win or lose rounds, and the overlay keeps the score. |
+| **Stand-in** | The effect a challenge runs instead of a gift that doesn't fit it, so the gift isn't wasted. |
 | **Story Mode** | GTA V's single-player game. The only place to use mods. |
 | **ScriptHookV** | The free mod loader that lets scripts run in GTA V. |
 | **ScriptHookVDotNet** | The loader for scripts like Playzy's, on top of ScriptHookV. |

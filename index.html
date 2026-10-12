@@ -78,7 +78,7 @@
     .feat .ic svg{width:20px; height:20px}
     .feat h3{margin:0 0 6px; font-size:1.08rem; letter-spacing:-.01em}
     .feat p{margin:0; color:var(--ink-2); font-size:.95rem}
-    .feat code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.88em}
+    .feat code, .note code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.88em}
 
     .gallery{display:grid; grid-template-columns:1fr 1fr; gap:18px}
     .gallery figure{margin:0}
@@ -161,7 +161,7 @@
       <div class="feat">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14l-1.5-6.5A2 2 0 0 0 15.6 9H8.4a2 2 0 0 0-1.9 1.5z"/><circle cx="7.5" cy="17.5" r="2"/><circle cx="16.5" cy="17.5" r="2"/></svg></div>
         <h3>GTA V Story Mode</h3>
-        <p>53 effects, from tanks and jets to chimps, meteors and a black hole, and 16 challenges with a win/loss score, from the Chiliad Race to Zombie Apocalypse and a Boss Fight. Playzy installs its script with one button.</p>
+        <p>56 effects, from tanks and jets to chimps, meteors and a black hole, and 20 challenges with a win/loss score, from the Chiliad Race to Zombie Apocalypse, a Boss Fight and Battle Royale. Viewers can join three of them from the chat with <code>!join</code>.</p>
       </div>
       <div class="feat">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="m3 7 9 5 9-5M12 12v10"/></svg></div>
@@ -189,8 +189,10 @@
         <p>Fake viewers send gifts, likes and chat through your preset, exactly like real ones, so you know it works first.</p>
       </div>
     </section>
-    <p class="note">Also in the box: 12 gift actions made for the GTA V challenges (a zombie horde, healing the boss,
-      adding or stealing time), viewers' names over the enemies they send, coin tiers for gifts without a rule, combos
+    <p class="note">Also in the box: gift actions made for the GTA V challenges (a zombie horde, healing the boss,
+      adding or stealing time), challenges that only take the gifts that fit them and turn the rest into ones that do,
+      viewers who join Battle Royale, Viewer Racers and Team War by typing <code>!join</code>, <code>!red</code> or
+      <code>!blue</code>, viewers' names over the enemies they send, coin tiers for gifts without a rule, combos
       counted once or per gift with a limit, cooldowns per rule and per viewer, chat commands, presets you can export
       and share, a webhook for any URL, and a WebSocket SDK for mods of other games. A gift that arrives during a
       cooldown waits its turn; free likes and chat are skipped instead.</p>
