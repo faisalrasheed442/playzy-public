@@ -184,7 +184,7 @@ Open **Games**. Playzy looks for GTA V on your PC by itself.
 
 If you already have a `PlayzyGTA.ini`, Playzy asks whether to **Keep my settings** or **Use the defaults**. If Windows doesn't let Playzy write into the GTA V folder, close GTA V and try again, or run Playzy as administrator once.
 
-**Older gift scripts.** Some older TikTok scripts for GTA V, like `GiftEffects.cs`, use the same port as Playzy's script (8766) and can stop it from starting. If Playzy finds one in your `scripts` folder, the card names it and the button says **Install and fix**. That moves the old script into `scripts\_disabled_by_playzy`. Nothing is deleted, so you can move it back later.
+**Older gift scripts.** Some older TikTok scripts for GTA V, like `GiftEffects.cs`, use the same port as Playzy's script (8766) and can stop it from starting. If Playzy finds one in your `scripts` folder, the card names it and the button says **Install and fix**. That moves the old script into the `Playzy - disabled scripts` folder next to GTA5.exe (outside `scripts`, so it really stops loading). Nothing is deleted, so you can move it back later.
 
 ### Step 4: Start the game
 
