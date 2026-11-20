@@ -457,7 +457,7 @@ Changes save by themselves.
 | Doughnut | Ballas gang |
 | Cap | Killer clowns |
 | Paper Crane | Supercar |
-| Hand Hearts | Tank (5 s cooldown) |
+| Hand Heart | Tank (5 s cooldown) |
 | Confetti | Airstrike |
 | Sunglasses | Skydive (10 s cooldown) |
 | Corgi | Fighter jet |

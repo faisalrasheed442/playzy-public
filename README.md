@@ -34,7 +34,7 @@ game, and gives you an overlay for TikTok LIVE Studio or OBS. No event limits, n
 
 ## Screenshots
 
-<img src="images/app-presets.png" width="49%" alt="Presets: the GTA V Chaos rules, each gift with its effect and cooldown"> <img src="images/app-rule.png" width="49%" alt="The rule editor: Hand Hearts sends a tank, with a 5 second cooldown">
+<img src="images/app-presets.png" width="49%" alt="Presets: the GTA V Chaos rules, each gift with its effect and cooldown"> <img src="images/app-rule.png" width="49%" alt="The rule editor: Hand Heart sends a tank, with a 5 second cooldown">
 
 <img src="images/app-games.png" width="49%" alt="Games: the GTA V card with ScriptHookV, the ASI loader and ScriptHookVDotNet found and the Playzy script installed"> <img src="images/app-overlay.png" width="49%" alt="Overlay: the canvas, the full overlay link and one link per widget">
 
